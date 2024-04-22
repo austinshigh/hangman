@@ -1,6 +1,8 @@
-import logo from "./logo.svg";
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Homepage from "./pages/Homepage";
+import Settings from "./pages/Settings";
+import Stats from "./pages/Stats";
+import Layout from "./Layout";
 import { useState } from "react";
 
 function App() {
@@ -12,6 +14,7 @@ function App() {
   const [guessLimit, setGuessLimit] = useState(null);
 
   // functions for Homepage
+
   const incrementTotalWins = () => {
     setTotalWins(totalWins + 1);
   };
@@ -22,48 +25,51 @@ function App() {
 
   // functions for settings page
 
-  const handleSetLowerBound = (e) => {
-    setLowerBound(e.target.value);
+  const handleSetLowerBound = (number) => {
+    setLowerBound(number);
   };
 
-  const handleSetUpperBound = (e) => {
-    setUpperBound(e.target.value);
+  const handleSetUpperBound = (number) => {
+    setUpperBound(number);
   };
 
-  const handleSetGuessLimit = (e) => {
-    setGuessLimit(e.target.value);
+  const handleSetGuessLimit = (number) => {
+    setGuessLimit(number);
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <Homepage
-          guessLimit={guessLimit}
-          lowerBound={lowerBound}
-          upperBound={upperBound}
-          addToTotalGuessesForWin={addToTotalGuessesForWins}
-          incrementTotalWins={incrementTotalWins}
-        />
-        {/* <Settings
-          handleSetLowerBound={handleSetLowerBound}
-          handleSetUpperBound={handleSetUpperBound}
-          handleSetGuessLimit={handleSetGuessLimit}
-        />
-        <Stats wins={totalWins} guesses={totalGuessesForWins} /> */}
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route
+            index
+            element={
+              <Homepage
+                guessLimit={guessLimit}
+                lowerBound={lowerBound}
+                upperBound={upperBound}
+                addToTotalGuessesForWins={addToTotalGuessesForWins}
+                incrementTotalWins={incrementTotalWins}
+              />
+            }
+          />
+          <Route
+            path="settings"
+            element={
+              <Settings
+                handleSetLowerBound={handleSetLowerBound}
+                handleSetUpperBound={handleSetUpperBound}
+                handleSetGuessLimit={handleSetGuessLimit}
+              />
+            }
+          />
+          <Route
+            path="stats"
+            element={<Stats wins={totalWins} guesses={totalGuessesForWins} />}
+          />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

@@ -1,26 +1,28 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 
 const Homepage = (props) => {
-  const [randomNumber, setRandomNumber] = useState(null);
   const [guess, setGuess] = useState(null);
-  const [remainingGuesses, setRemainingGuesses] = useState(props.guessLimit);
+  const [remainingGuesses, setRemainingGuesses] = useState(
+    props.guessLimit || 5
+  );
   const [totalGuesses, setTotalGuesses] = useState(0);
   const [hint, setHint] = useState(null);
   const [victory, setVictory] = useState(false);
   const [loss, setLoss] = useState(false);
 
   const generateRandomNumber = () => {
-    let max = props.upperBound;
-    let min = props.lowerBound;
-    //TODO add lowerbound to calculation
-    return Math.floor(Math.random() * max);
+    let max = props.upperBound || 100;
+    let min = props.lowerBound || 0;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   };
+
+  const [randomNumber, setRandomNumber] = useState(generateRandomNumber());
 
   const handleClickNewGame = (e) => {
     e.preventDefault();
     setGuess(null);
-    setRemainingGuesses(props.guessLimit);
+    setRemainingGuesses(props.guessLimit || 5);
     setHint(null);
     setVictory(false);
     setLoss(false);
@@ -58,9 +60,6 @@ const Homepage = (props) => {
     }
   };
 
-  useEffect(() => {
-    randomNumber === null && setRandomNumber(generateRandomNumber());
-  }, [setRandomNumber, randomNumber]);
   return (
     <>
       {randomNumber !== null && (
