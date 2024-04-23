@@ -9,9 +9,9 @@ function App() {
   const [totalWins, setTotalWins] = useState(0);
   const [totalGuessesForWins, setTotalGuessesForWins] = useState(0);
 
-  const [lowerBound, setLowerBound] = useState(null);
-  const [upperBound, setUpperBound] = useState(null);
-  const [guessLimit, setGuessLimit] = useState(null);
+  const [lowerBound, setLowerBound] = useState(0);
+  const [upperBound, setUpperBound] = useState(100);
+  const [guessLimit, setGuessLimit] = useState(5);
 
   // functions for Homepage
 
@@ -57,6 +57,9 @@ function App() {
             path="settings"
             element={
               <Settings
+                lower={lowerBound}
+                upper={upperBound}
+                guesses={guessLimit}
                 handleSetLowerBound={handleSetLowerBound}
                 handleSetUpperBound={handleSetUpperBound}
                 handleSetGuessLimit={handleSetGuessLimit}

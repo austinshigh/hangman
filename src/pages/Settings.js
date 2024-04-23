@@ -1,40 +1,58 @@
 import React, { useState } from "react";
+import { StyledInput, StyledButton, InputContainer } from "./Homepage";
+import styled from "styled-components";
 
 const Settings = (props) => {
   const [lowerBound, setLowerBound] = useState(null);
   const [upperBound, setUpperBound] = useState(null);
   const [guessLimit, setGuessLimit] = useState(null);
 
-  // const handleLowerBoundInput = (e) => {
-  //     setLowerBound(e.target.value);
-  // }
   return (
-    <>
-      <h3>Settings</h3>
-      <div className="button_group">
-        <input onChange={(e) => setLowerBound(e.target.value)}></input>
-        <button onClick={() => props.handleSetLowerBound(lowerBound)}>
-          Set Lower Bound
-        </button>
+    <SettingsContainer>
+      <h3>settings</h3>
+      <div>
+        random numbers generated will range from {props.lower} to {props.upper}{" "}
+        (inclusive)
       </div>
-      <div className="button_group">
-        <input onChange={(e) => setUpperBound(e.target.value)}></input>
-        <button onClick={() => props.handleSetUpperBound(upperBound)}>
-          Set Upper Bound
-        </button>
+      <div>
+        players will have {props.guesses} guesses to guess the correct answer
       </div>
-      <div className="button_group">
-        <input onChange={(e) => setGuessLimit(e.target.value)}></input>
-        <button onClick={() => props.handleSetGuessLimit(guessLimit)}>
-          Set Guess Limit
-        </button>
-      </div>
-    </>
+      <InputContainer>
+        <StyledInput
+          onChange={(e) => setLowerBound(e.target.value)}
+        ></StyledInput>
+        <StyledButton onClick={() => props.handleSetLowerBound(lowerBound)}>
+          set new lower bound
+        </StyledButton>
+      </InputContainer>
+      <InputContainer>
+        <StyledInput
+          onChange={(e) => setUpperBound(e.target.value)}
+        ></StyledInput>
+        <StyledButton onClick={() => props.handleSetUpperBound(upperBound)}>
+          set new upper bound
+        </StyledButton>
+      </InputContainer>
+      <InputContainer>
+        <StyledInput
+          onChange={(e) => setGuessLimit(e.target.value)}
+        ></StyledInput>
+        <StyledButton onClick={() => props.handleSetGuessLimit(guessLimit)}>
+          set new guess limit
+        </StyledButton>
+      </InputContainer>
+    </SettingsContainer>
   );
 };
 
-// handleSetLowerBound={handleSetLowerBound}
-// handleSetUpperBound={handleSetUpperBound}
-// handleSetGuessLimit={handleSetGuessLimit}
+const SettingsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  div {
+    padding: 0px 20px;
+  }
+`;
 
 export default Settings;
