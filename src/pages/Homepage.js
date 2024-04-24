@@ -6,14 +6,12 @@ import HiddenWord from "../components/HiddenWord";
 import useQuote from "../hooks/useQuote";
 
 const Homepage = (props) => {
-  const [guess, setGuess] = useState(null);
   const [remainingGuesses, setRemainingGuesses] = useState(
     props.guessLimit || 5
   );
-  const [totalGuesses, setTotalGuesses] = useState(0);
   const [victory, setVictory] = useState(false);
   const [loss, setLoss] = useState(false);
-  const [gameOver, setGameOver] = useState(false);
+  const gameOver = false;
   const [incorrectGuesses, setIncorrectGuesses] = useState([]);
   const [correctGuesses, setCorrectGuesses] = useState([]);
 
@@ -23,16 +21,16 @@ const Homepage = (props) => {
 
   // https://api.quotable.io/random?maxLength=40&minLength=0
 
-  const mockJson = {
-    author: "Susan B. Anthony",
-    authorSlug: "susan-b-anthony",
-    content: "Independence is happiness.",
-    dateAdded: "2019-03-15",
-    dateModified: "2023-04-14",
-    length: 26,
-    tags: ["Famous Quotes"],
-    _id: "soeD1o2PIWwM",
-  };
+  // const mockJson = {
+  //   author: "Susan B. Anthony",
+  //   authorSlug: "susan-b-anthony",
+  //   content: "Independence is happiness.",
+  //   dateAdded: "2019-03-15",
+  //   dateModified: "2023-04-14",
+  //   length: 26,
+  //   tags: ["Famous Quotes"],
+  //   _id: "soeD1o2PIWwM",
+  // };
 
   const handleClickKey = (e) => {
     handleLetterChosen(e.target.innerText.toLowerCase());
@@ -48,8 +46,13 @@ const Homepage = (props) => {
     }
   };
 
+  const handleTriggerVictory = () => {
+    setVictory(true);
+  };
+
   const handleInvalidGuess = (letter) => {
     setIncorrectGuesses((prevState) => [...prevState, letter]);
+    setRemainingGuesses((prevState) => prevState - 1);
   };
 
   const handleCorrectGuess = (letter) => {
@@ -63,77 +66,77 @@ const Homepage = (props) => {
     }
   }, [quote]);
 
-  const generateRandomNumber = () => {
-    let max = props.upperBound;
-    let min = props.lowerBound;
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  };
-
-  const [randomNumber, setRandomNumber] = useState(generateRandomNumber());
+  useEffect(() => {
+    if (remainingGuesses === 0) {
+      setLoss(true);
+    }
+  }, [remainingGuesses]);
 
   const handleClickNewGame = (e) => {
     e.preventDefault();
-    setGuess(null);
-    setRemainingGuesses(props.guessLimit);
-    setVictory(false);
     setLoss(false);
-    setGameOver(false);
-    setRandomNumber(generateRandomNumber());
+    //re-hit-api
+    setVictory(false);
+    setRemainingGuesses(props.guessLimit || 5);
+    setIncorrectGuesses([]);
+    setCorrectGuesses([]);
   };
 
-  const handleClickGuess = (e) => {
-    e.preventDefault();
-    setTotalGuesses(totalGuesses + 1);
-    if (!loss && !victory) {
-      const currentGuess = Number.parseInt(guess);
-      if (randomNumber > currentGuess) {
-      } else if (randomNumber < currentGuess) {
-      } else if (randomNumber === currentGuess) {
-        props.incrementTotalWins();
-        props.addToTotalGuessesForWins(totalGuesses);
-        setVictory(true);
-        setGameOver(true);
-        setTotalGuesses(0);
-      }
-      if (remainingGuesses === 1) {
-        setLoss(true);
-        setGameOver(true);
-        setRemainingGuesses(remainingGuesses - 1);
-      } else {
-        setRemainingGuesses(remainingGuesses - 1);
-      }
-    }
-  };
+  // const handleClickGuess = (e) => {
+  //   e.preventDefault();
+  //   setTotalGuesses(totalGuesses + 1);
+  //   if (!loss && !victory) {
+  //     const currentGuess = Number.parseInt(guess);
+  //     if (randomNumber > currentGuess) {
+  //     } else if (randomNumber < currentGuess) {
+  //     } else if (randomNumber === currentGuess) {
+  //       props.incrementTotalWins();
+  //       props.addToTotalGuessesForWins(totalGuesses);
+  //       setVictory(true);
+  //       setGameOver(true);
+  //       setTotalGuesses(0);
+  //     }
+  //     if (remainingGuesses === 1) {
+  //       setLoss(true);
+  //       setGameOver(true);
+  //       setRemainingGuesses(remainingGuesses - 1);
+  //     } else {
+  //       setRemainingGuesses(remainingGuesses - 1);
+  //     }
+  //   }
+  // };
 
-  const handleEnterKeyPress = (e) => {
-    if (e.keyCode === 13) {
-      handleClickGuess(e);
-    }
-  };
+  // const handleEnterKeyPress = (e) => {
+  //   if (e.keyCode === 13) {
+  //     handleClickGuess(e);
+  //   }
+  // };
 
   return (
     <HomepageContainer>
       <div>can you guess the famous quote before time runs out?</div>
-      <HiddenWord quote={quote} correctGuesses={correctGuesses} />
-      <Keyboard
-        handleClickKey={handleClickKey}
-        disabledLetters={incorrectGuesses}
+      <HiddenWord
+        quote={quote}
+        correctGuesses={correctGuesses}
+        handleTriggerVictory={handleTriggerVictory}
       />
-      {victory && <Win>you win!</Win>}
+      {!loss && !victory && (
+        <Keyboard
+          handleClickKey={handleClickKey}
+          disabledLetters={[...incorrectGuesses, ...correctGuesses]}
+        />
+      )}
+      {victory && (
+        <div>
+          <Win>you win!</Win>
+          <div>{author}</div>
+        </div>
+      )}
       {loss && <Lose>you lose.</Lose>}
-      {victory || (loss && <div>that correct answer was {randomNumber}</div>)}
+      {victory || (loss && <div>that correct answer was {quote}</div>)}
       {!gameOver && (
         <>
-          <InputContainer>
-            <StyledInput
-              onChange={(e) => setGuess(e.target.value)}
-              ß
-              onKeyDown={(e) => handleEnterKeyPress(e)}
-            ></StyledInput>
-            <StyledButton onClick={(e) => handleClickGuess(e)}>
-              submit guess
-            </StyledButton>
-          </InputContainer>
+          <InputContainer></InputContainer>
           <RemainingGuesses>
             you have {remainingGuesses} remaining guesses
           </RemainingGuesses>

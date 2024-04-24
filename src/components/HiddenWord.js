@@ -28,6 +28,12 @@ const HiddenWord = (props) => {
     setHint(generateHint(props.quote, props.correctGuesses));
   }, [props.correctGuesses, props.quote]);
 
+  useEffect(() => {
+    if (hint.indexOf("_") === -1) {
+      props.handleTriggerVictory();
+    }
+  }, [hint]);
+
   return <StyledHint>{hint}</StyledHint>;
 };
 

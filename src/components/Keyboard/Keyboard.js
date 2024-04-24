@@ -50,46 +50,44 @@ const Keyboard = (props) => {
   }, [props.disabledLetters]);
 
   return (
-    <div>
+    <Container>
       <Row>{firstRowComponents}</Row>
       <Row>{secondRowComponents}</Row>
-      <Row>
-        <DeleteKey>{"Delete"}</DeleteKey>
-        {thirdRowComponents}
-        <EnterKey>{"Enter"}</EnterKey>
-      </Row>
-    </div>
+      <Row>{thirdRowComponents}</Row>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const Row = styled.div`
   display: flex;
   flex-direction: row;
 `;
 
-const WideKey = styled.div`
-  text-align: center;
-  height: 35px;
-  line-height: 35px;
-  margin: 5px;
-  border: 1px;
-  border-color: #333333;
-  border-style: solid;
-  font-size: 20px;
-  border-radius: 5px;
-  width: 80px;
-  box-shadow: 1px 1px 1px #333333;
-  &:hover {
-    background-color: rgb(0, 132, 255);
-  }
-  &:active {
-    background-color: rgb(0, 54, 104);
-    color: white;
-  }
-`;
-
-const EnterKey = styled(WideKey)``;
-
-const DeleteKey = styled(WideKey)``;
+// const WideKey = styled.div`
+//   text-align: center;
+//   height: 35px;
+//   line-height: 35px;
+//   margin: 5px;
+//   border: 1px;
+//   border-color: #333333;
+//   border-style: solid;
+//   font-size: 20px;
+//   border-radius: 5px;
+//   width: 80px;
+//   box-shadow: 1px 1px 1px #333333;
+//   &:hover {
+//     background-color: rgb(0, 132, 255);
+//   }
+//   &:active {
+//     background-color: rgb(0, 54, 104);
+//     color: white;
+//   }
+// `;
 
 export default Keyboard;
