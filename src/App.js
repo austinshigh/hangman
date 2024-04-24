@@ -5,7 +5,7 @@ import Stats from "./pages/Stats";
 import Layout from "./Layout";
 import { useState } from "react";
 
-function App() {
+function Hangman() {
   const [totalWins, setTotalWins] = useState(0);
   const [totalGuessesForWins, setTotalGuessesForWins] = useState(0);
 
@@ -76,4 +76,4 @@ function App() {
   );
 }
 
-export default App;
+export default Hangman;

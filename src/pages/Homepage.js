@@ -1,6 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
+import Keyboard from "../components/Keyboard/Keyboard";
+import HiddenWord from "../components/HiddenWord";
 
 const Homepage = (props) => {
   const [guess, setGuess] = useState(null);
@@ -8,10 +10,39 @@ const Homepage = (props) => {
     props.guessLimit || 5
   );
   const [totalGuesses, setTotalGuesses] = useState(0);
-  const [hint, setHint] = useState(null);
   const [victory, setVictory] = useState(false);
   const [loss, setLoss] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+
+  // https://api.quotable.io/random?maxLength=40&minLength=0
+
+  const mockJson = {
+    author: "Susan B. Anthony",
+    authorSlug: "susan-b-anthony",
+    content: "Independence is happiness.",
+    dateAdded: "2019-03-15",
+    dateModified: "2023-04-14",
+    length: 26,
+    tags: ["Famous Quotes"],
+    _id: "soeD1o2PIWwM",
+  };
+
+  const generateHint = (quote) => {
+    let parsedHint = quote.split("").map((n) => {
+      if (n === " ") {
+        return " ";
+      } else {
+        return "_";
+      }
+    });
+    return parsedHint;
+  };
+
+  const [hint, setHint] = useState(generateHint(mockJson.content));
+
+  const handleClickKey = (e) => {
+    console.log(e.target.innerText);
+  };
 
   const generateRandomNumber = () => {
     let max = props.upperBound;
@@ -68,12 +99,9 @@ const Homepage = (props) => {
 
   return (
     <HomepageContainer>
-      <h3>homepage</h3>
-      <div>
-        a random number between {props.lowerBound} and {props.upperBound} has
-        been generated
-      </div>
-      <div>think you can guess the answer?</div>
+      <div>can you guess the famous quote before time runs out?</div>
+      <HiddenWord hint={hint} />
+      <Keyboard handleClickKey={handleClickKey} />
       {victory && <Win>you win!</Win>}
       {loss && <Lose>you lose.</Lose>}
       {victory || (loss && <div>that correct answer was {randomNumber}</div>)}
@@ -103,6 +131,11 @@ const Homepage = (props) => {
     </HomepageContainer>
   );
 };
+
+const StyledHint = styled.div`
+  letter-spacing: 10px;
+  font-size: 30px;
+`;
 
 const Win = styled.div`
   color: blue;
