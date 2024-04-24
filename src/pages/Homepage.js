@@ -14,8 +14,11 @@ const Homepage = (props) => {
   const gameOver = false;
   const [incorrectGuesses, setIncorrectGuesses] = useState([]);
   const [correctGuesses, setCorrectGuesses] = useState([]);
+  const [regenerate, setRegenerate] = useState(false);
 
-  const { quote, author, isLoading } = useQuote({ min: 0, max: 40 });
+  const { quote, author, isLoading } = useQuote({
+    regenerate: regenerate,
+  });
 
   const [quoteArr, setQuoteArr] = useState([]);
 
@@ -80,37 +83,8 @@ const Homepage = (props) => {
     setRemainingGuesses(props.guessLimit || 5);
     setIncorrectGuesses([]);
     setCorrectGuesses([]);
+    setRegenerate(true);
   };
-
-  // const handleClickGuess = (e) => {
-  //   e.preventDefault();
-  //   setTotalGuesses(totalGuesses + 1);
-  //   if (!loss && !victory) {
-  //     const currentGuess = Number.parseInt(guess);
-  //     if (randomNumber > currentGuess) {
-  //     } else if (randomNumber < currentGuess) {
-  //     } else if (randomNumber === currentGuess) {
-  //       props.incrementTotalWins();
-  //       props.addToTotalGuessesForWins(totalGuesses);
-  //       setVictory(true);
-  //       setGameOver(true);
-  //       setTotalGuesses(0);
-  //     }
-  //     if (remainingGuesses === 1) {
-  //       setLoss(true);
-  //       setGameOver(true);
-  //       setRemainingGuesses(remainingGuesses - 1);
-  //     } else {
-  //       setRemainingGuesses(remainingGuesses - 1);
-  //     }
-  //   }
-  // };
-
-  // const handleEnterKeyPress = (e) => {
-  //   if (e.keyCode === 13) {
-  //     handleClickGuess(e);
-  //   }
-  // };
 
   return (
     <HomepageContainer>
@@ -127,10 +101,10 @@ const Homepage = (props) => {
         />
       )}
       {victory && (
-        <div>
+        <VictoryContainer>
+          <AuthorName> author: {author}</AuthorName>
           <Win>you win!</Win>
-          <div>{author}</div>
-        </div>
+        </VictoryContainer>
       )}
       {loss && <Lose>you lose.</Lose>}
       {victory || (loss && <div>that correct answer was {quote}</div>)}
@@ -181,6 +155,16 @@ const RemainingGuesses = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   gap: 20px;
+`;
+
+const AuthorName = styled.div`
+  font-size: 30px;
+`;
+
+const VictoryContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const StyledInput = styled.input`

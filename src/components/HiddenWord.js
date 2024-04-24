@@ -29,17 +29,24 @@ const HiddenWord = (props) => {
   }, [props.correctGuesses, props.quote]);
 
   useEffect(() => {
-    if (hint.indexOf("_") === -1) {
+    if (hint.length > 1 && hint.indexOf("_") === -1) {
       props.handleTriggerVictory();
     }
   }, [hint]);
 
-  return <StyledHint>{hint}</StyledHint>;
+  return (
+    <Container>
+      <StyledHint>{hint}</StyledHint>
+    </Container>
+  );
 };
+
+const Container = styled.div``;
 
 const StyledHint = styled.div`
   letter-spacing: 10px;
   font-size: 30px;
+  text-align: center;
 `;
 
 export default HiddenWord;
