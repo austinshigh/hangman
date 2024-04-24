@@ -3,7 +3,10 @@ import styled from "styled-components";
 
 const Key = (props) => {
   return (
-    <StyledKey onClick={(e) => props.handleClickKey(e)}>
+    <StyledKey
+      className={props.disabled && "disabled"}
+      onClick={(e) => props.handleClickKey(e)}
+    >
       {props.children}
     </StyledKey>
   );
@@ -26,6 +29,10 @@ const StyledKey = styled.div`
   &:active {
     background-color: rgb(0, 54, 104);
     color: white;
+  }
+  &.disabled {
+    pointer-events: none;
+    background-color: #333;
   }
 `;
 

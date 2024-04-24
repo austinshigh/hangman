@@ -1,8 +1,9 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import Keyboard from "../components/Keyboard/Keyboard";
 import HiddenWord from "../components/HiddenWord";
+import useQuote from "../hooks/useQuote";
 
 const Homepage = (props) => {
   const [guess, setGuess] = useState(null);
@@ -13,6 +14,12 @@ const Homepage = (props) => {
   const [victory, setVictory] = useState(false);
   const [loss, setLoss] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [incorrectGuesses, setIncorrectGuesses] = useState([]);
+  const [correctGuesses, setCorrectGuesses] = useState([]);
+
+  const { quote, author, isLoading } = useQuote({ min: 0, max: 40 });
+
+  const [quoteArr, setQuoteArr] = useState([]);
 
   // https://api.quotable.io/random?maxLength=40&minLength=0
 
@@ -27,22 +34,34 @@ const Homepage = (props) => {
     _id: "soeD1o2PIWwM",
   };
 
-  const generateHint = (quote) => {
-    let parsedHint = quote.split("").map((n) => {
-      if (n === " ") {
-        return " ";
-      } else {
-        return "_";
-      }
-    });
-    return parsedHint;
-  };
-
-  const [hint, setHint] = useState(generateHint(mockJson.content));
-
   const handleClickKey = (e) => {
-    console.log(e.target.innerText);
+    handleLetterChosen(e.target.innerText.toLowerCase());
   };
+
+  const handleLetterChosen = (letter) => {
+    let validGuess = quoteArr.includes(letter);
+    console.log(validGuess);
+    if (!validGuess) {
+      handleInvalidGuess(letter);
+    } else {
+      handleCorrectGuess(letter);
+    }
+  };
+
+  const handleInvalidGuess = (letter) => {
+    setIncorrectGuesses((prevState) => [...prevState, letter]);
+  };
+
+  const handleCorrectGuess = (letter) => {
+    setCorrectGuesses((prevState) => [...prevState, letter]);
+  };
+
+  useEffect(() => {
+    console.log("quote" + quote);
+    if (quote !== undefined) {
+      setQuoteArr(quote.toLowerCase().split(""));
+    }
+  }, [quote]);
 
   const generateRandomNumber = () => {
     let max = props.upperBound;
@@ -56,7 +75,6 @@ const Homepage = (props) => {
     e.preventDefault();
     setGuess(null);
     setRemainingGuesses(props.guessLimit);
-    setHint(null);
     setVictory(false);
     setLoss(false);
     setGameOver(false);
@@ -69,20 +87,16 @@ const Homepage = (props) => {
     if (!loss && !victory) {
       const currentGuess = Number.parseInt(guess);
       if (randomNumber > currentGuess) {
-        setHint("too low");
       } else if (randomNumber < currentGuess) {
-        setHint("too high");
       } else if (randomNumber === currentGuess) {
         props.incrementTotalWins();
         props.addToTotalGuessesForWins(totalGuesses);
-        setHint(null);
         setVictory(true);
         setGameOver(true);
         setTotalGuesses(0);
       }
       if (remainingGuesses === 1) {
         setLoss(true);
-        setHint(null);
         setGameOver(true);
         setRemainingGuesses(remainingGuesses - 1);
       } else {
@@ -100,8 +114,11 @@ const Homepage = (props) => {
   return (
     <HomepageContainer>
       <div>can you guess the famous quote before time runs out?</div>
-      <HiddenWord hint={hint} />
-      <Keyboard handleClickKey={handleClickKey} />
+      <HiddenWord quote={quote} correctGuesses={correctGuesses} />
+      <Keyboard
+        handleClickKey={handleClickKey}
+        disabledLetters={incorrectGuesses}
+      />
       {victory && <Win>you win!</Win>}
       {loss && <Lose>you lose.</Lose>}
       {victory || (loss && <div>that correct answer was {randomNumber}</div>)}
@@ -117,7 +134,6 @@ const Homepage = (props) => {
               submit guess
             </StyledButton>
           </InputContainer>
-          {hint !== null && <Hint>your guess was {hint}</Hint>}
           <RemainingGuesses>
             you have {remainingGuesses} remaining guesses
           </RemainingGuesses>

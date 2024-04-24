@@ -1,29 +1,61 @@
 import React from "react";
 import styled from "styled-components";
 import Key from "./Key";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Keyboard = (props) => {
-  const rowOne = ["Q", "W", "E", "R", "T", "Y"];
+  const rowOne = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
   const rowTwo = ["A", "S", "D", "F", "G", "H", "J", "K", "L"];
   const rowThree = ["Z", "X", "C", "V", "B", "N", "M"];
 
-  const renderKeys = (arr) => {
+  const renderKeys = (arr, disabledKeys) => {
     return arr.map((letter, i) => {
-      return (
-        <Key key={i} handleClickKey={props.handleClickKey}>
-          {letter}
-        </Key>
-      );
+      if (
+        disabledKeys !== undefined &&
+        disabledKeys.includes(letter.toLowerCase())
+      ) {
+        return (
+          <Key key={i} handleClickKey={props.handleClickKey} disabled={true}>
+            {letter}
+          </Key>
+        );
+      } else {
+        return (
+          <Key key={i} handleClickKey={props.handleClickKey}>
+            {letter}
+          </Key>
+        );
+      }
     });
   };
 
+  const [firstRowComponents, setFirstRowComponents] = useState(
+    renderKeys(rowOne)
+  );
+
+  const [secondRowComponents, setSecondRowComponents] = useState(
+    renderKeys(rowTwo)
+  );
+
+  const [thirdRowComponents, setThirdRowComponents] = useState(
+    renderKeys(rowThree)
+  );
+
+  // TODO handle disabling keys
+  useEffect(() => {
+    setFirstRowComponents(renderKeys(rowOne, props.disabledLetters));
+    setSecondRowComponents(renderKeys(rowTwo, props.disabledLetters));
+    setThirdRowComponents(renderKeys(rowThree, props.disabledLetters));
+  }, [props.disabledLetters]);
+
   return (
     <div>
-      <Row>{renderKeys(rowOne)}</Row>
-      <Row>{renderKeys(rowTwo)}</Row>
+      <Row>{firstRowComponents}</Row>
+      <Row>{secondRowComponents}</Row>
       <Row>
         <DeleteKey>{"Delete"}</DeleteKey>
-        {renderKeys(rowThree)}
+        {thirdRowComponents}
         <EnterKey>{"Enter"}</EnterKey>
       </Row>
     </div>
