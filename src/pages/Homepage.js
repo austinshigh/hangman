@@ -14,10 +14,11 @@ const Homepage = (props) => {
   const gameOver = false;
   const [incorrectGuesses, setIncorrectGuesses] = useState([]);
   const [correctGuesses, setCorrectGuesses] = useState([]);
-  const [regenerate, setRegenerate] = useState(false);
+  const [regenerate, setRegenerate] = useState(true);
 
-  const { quote, author, isLoading } = useQuote({
+  const { quote, author } = useQuote({
     regenerate: regenerate,
+    setRegenerate: setRegenerate,
   });
 
   const [quoteArr, setQuoteArr] = useState([]);
@@ -125,11 +126,6 @@ const Homepage = (props) => {
   );
 };
 
-const StyledHint = styled.div`
-  letter-spacing: 10px;
-  font-size: 30px;
-`;
-
 const Win = styled.div`
   color: blue;
   font-size: 25px;
@@ -193,7 +189,5 @@ export const StyledButton = styled.button`
   border-radius: 10px;
   border: none;
 `;
-
-const Hint = styled.div``;
 
 export default Homepage;

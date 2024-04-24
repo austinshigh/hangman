@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const HiddenWord = (props) => {
+  const { quote, correctGuesses, handleTriggerVictory } = props;
+
   const generateHint = (quote, lettersGuessed) => {
     console.log(lettersGuessed);
     let parsedHint = quote.split("").map((letter) => {
@@ -25,14 +27,14 @@ const HiddenWord = (props) => {
 
   useEffect(() => {
     // console.log(props.correctGuesses);
-    setHint(generateHint(props.quote, props.correctGuesses));
-  }, [props.correctGuesses, props.quote]);
+    setHint(generateHint(quote, correctGuesses));
+  }, [correctGuesses, quote]);
 
   useEffect(() => {
     if (hint.length > 1 && hint.indexOf("_") === -1) {
-      props.handleTriggerVictory();
+      handleTriggerVictory();
     }
-  }, [hint]);
+  }, [hint, handleTriggerVictory]);
 
   return (
     <Container>

@@ -1,21 +1,11 @@
 import axios from "axios";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 const useQuote = (props) => {
   const [quote, setQuote] = useState("");
   const [author, setAuthor] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [regenerate, setRegenerate] = useState(props.regenerate);
-  const firstRender = useRef(true);
-
-  useEffect(() => {
-    if (firstRender.current === true) {
-      firstRender.current = false;
-      setRegenerate(true);
-    } else if (props.regenerate === true) {
-      setRegenerate(true);
-    }
-  }, [props.regenerate]);
+  const { regenerate, setRegenerate } = props;
 
   useEffect(() => {
     const getQuoteData = async () => {
@@ -42,7 +32,7 @@ const useQuote = (props) => {
       }
     };
     getQuoteData();
-  }, [regenerate]);
+  }, [regenerate, setRegenerate]);
   return {
     quote,
     author,
