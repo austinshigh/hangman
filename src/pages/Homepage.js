@@ -9,7 +9,7 @@ const Homepage = () => {
       <Navigation page="home" />
       <Water></Water>
       <HomeContainer>
-        <img src={YourHome} />
+        <img alt="home" src={YourHome} />
       </HomeContainer>
     </>
   );

@@ -8,7 +8,6 @@ import { StyledLink } from "../components/Navigation";
 
 const GuessingLogic = (props) => {
   const {
-    originalPhrase,
     phrase,
     author,
     triggerQuote,
@@ -65,9 +64,9 @@ const GuessingLogic = (props) => {
   }, [remainingGuesses]);
 
   const handleClickNewGame = () => {
+    handleResetRemainingGuesses();
     setLoss(false);
     setVictory(false);
-    handleResetRemainingGuesses();
     setIncorrectGuesses([]);
     setCorrectGuesses([]);
     triggerQuote !== undefined && triggerQuote();
@@ -81,6 +80,7 @@ const GuessingLogic = (props) => {
           correctGuesses={correctGuesses}
           handleTriggerVictory={handleTriggerVictory}
           remainingGuesses={remainingGuesses}
+          loss={loss}
         />
       </HiddenWordContainer>
       {!loss && !victory && (
@@ -89,19 +89,17 @@ const GuessingLogic = (props) => {
           disabledLetters={[...incorrectGuesses, ...correctGuesses]}
         />
       )}
+      {victory || (loss && <AuthorName>{author || null}</AuthorName>)}
       {victory && (
         <VictoryContainer>
-          <AuthorName>{author || null}</AuthorName>
           <Win>you win!</Win>
         </VictoryContainer>
       )}
       {loss && (
         <VictoryContainer>
-          <Lose>you lose.</Lose>
+          <Lose>you lose</Lose>
         </VictoryContainer>
       )}
-      {victory || (loss && <div>{originalPhrase}</div>)}
-
       <ButtonContainer>
         <StyledButton onClick={(e) => handleClickNewGame(e)}>
           {victory || loss ? "play again" : "give up"}
@@ -126,7 +124,8 @@ const Win = styled.div`
 
 const Lose = styled.div`
   color: #ff6b6b;
-  font-size: 25px;
+  font-size: 50px;
+  margin: 20px 0px;
 `;
 
 const ButtonContainer = styled.div`
@@ -137,6 +136,7 @@ const ButtonContainer = styled.div`
 
 const AuthorName = styled.div`
   font-size: 30px;
+  text-align: center;
 `;
 
 const VictoryContainer = styled.div`
