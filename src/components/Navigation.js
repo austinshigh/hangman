@@ -16,11 +16,11 @@ const Navigation = (props) => {
             </NavButton>
           </>
         )}
-        {(props.page === "one-player" || props.page === "two-player") && (
+        {/* {(props.page === "one-player" || props.page === "two-player") && (
           <NavButton>
-            <StyledLink to="/">home</StyledLink>
+            <StyledLink to="/">go home</StyledLink>
           </NavButton>
-        )}
+        )} */}
       </Container>
     </>
   );
@@ -34,12 +34,12 @@ const Container = styled.div`
   text-align: center;
 `;
 
-const StyledLink = styled(Link)`
+export const StyledLink = styled(Link)`
   color: #333;
   text-decoration: none;
 `;
 
-const NavButton = styled.div`
+export const NavButton = styled.div`
   border: 1px solid black;
   border-radius: 3px;
   padding: 10px;

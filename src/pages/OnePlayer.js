@@ -2,8 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import useQuote from "../hooks/useQuote";
-import Navigation from "../components/Navigation";
+import { Link } from "react-router-dom";
 import GuessingLogic from "../components/GuessingLogic";
+import { NavButton } from "../components/Navigation";
+import { StyledLink } from "../components/Navigation";
 
 const OnePlayer = (props) => {
   const [regenerate, setRegenerate] = useState(true);
@@ -18,7 +20,6 @@ const OnePlayer = (props) => {
 
   return (
     <>
-      <Navigation page="one-player" />
       {/* {quote} */}
       <OnePlayerContainer>
         {/* <div>can you guess the famous quote?</div> */}
@@ -28,6 +29,9 @@ const OnePlayer = (props) => {
           triggerQuote={() => setRegenerate(true)}
         />
       </OnePlayerContainer>
+      <NavButton>
+        <StyledLink to="/">go home</StyledLink>
+      </NavButton>
     </>
   );
 };
