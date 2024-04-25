@@ -5,7 +5,6 @@ const Homepage = () => {
   return (
     <>
       <Navigation page="home" />
-      <div>Choose your Game Mode</div>
     </>
   );
 };

@@ -15,7 +15,7 @@ const useQuote = (props) => {
             .get("https://api.quotable.io/random?maxLength=40&minLength=0")
             .then((response) => {
               if (response.status === 200) {
-                setQuote(response.data.content.replace(/[^0-9a-z ]/gi, ""));
+                setQuote(response.data.content.replace(/[^a-z ]/gi, ""));
                 setAuthor(response.data.author);
                 return;
               }

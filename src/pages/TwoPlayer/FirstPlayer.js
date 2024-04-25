@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useState } from "react";
 
 const FirstPlayer = (props) => {
-  const { handleSubmitPhrase } = props;
+  const { handleSubmitPhrase, showError } = props;
   const [input, setInput] = useState();
 
   return (
@@ -12,7 +12,9 @@ const FirstPlayer = (props) => {
       <StyledInput
         placeholder="Max 40 characters"
         onChange={(e) => setInput(e.target.value)}
+        maxLength={40}
       ></StyledInput>
+      {showError && <InputError>a-z characters only</InputError>}
       <StyledButton onClick={() => handleSubmitPhrase(input)}>
         Ready
       </StyledButton>
@@ -32,6 +34,11 @@ const StyledInput = styled.input`
 
 const StyledButton = styled.button`
   height: 30px;
+`;
+
+const InputError = styled.div`
+  color: red;
+  text-align: center;
 `;
 
 export default FirstPlayer;
