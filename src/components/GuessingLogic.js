@@ -64,9 +64,9 @@ const GuessingLogic = (props) => {
   }, [remainingGuesses]);
 
   const handleClickNewGame = () => {
-    handleResetRemainingGuesses();
     setLoss(false);
     setVictory(false);
+    handleResetRemainingGuesses();
     setIncorrectGuesses([]);
     setCorrectGuesses([]);
     triggerQuote !== undefined && triggerQuote();
