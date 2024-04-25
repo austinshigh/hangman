@@ -5,7 +5,13 @@ import HiddenWord from "../components/HiddenWord";
 import { useState, useEffect } from "react";
 
 const GuessingLogic = (props) => {
-  const { phrase, author, triggerQuote, guessLimit } = props;
+  const {
+    phrase,
+    author,
+    triggerQuote,
+    guessLimit,
+    handleTriggerPlayerOneTurn,
+  } = props;
 
   const [remainingGuesses, setRemainingGuesses] = useState(guessLimit || 5);
   const [incorrectGuesses, setIncorrectGuesses] = useState([]);
@@ -53,14 +59,14 @@ const GuessingLogic = (props) => {
     }
   }, [remainingGuesses]);
 
-  const handleClickNewGame = (e) => {
-    e.preventDefault();
+  const handleClickNewGame = () => {
     setLoss(false);
     setVictory(false);
     setRemainingGuesses(guessLimit || 5);
     setIncorrectGuesses([]);
     setCorrectGuesses([]);
     triggerQuote !== undefined && triggerQuote();
+    handleTriggerPlayerOneTurn !== undefined && handleTriggerPlayerOneTurn();
   };
   return (
     <div>
@@ -106,12 +112,13 @@ const HiddenWordContainer = styled.div`
 `;
 
 const Win = styled.div`
-  color: blue;
-  font-size: 25px;
+  color: #6bcaff;
+  font-size: 40px;
+  margin-bottom: 20px;
 `;
 
 const Lose = styled.div`
-  color: red;
+  color: #ff6b6b;
   font-size: 25px;
 `;
 
@@ -137,12 +144,16 @@ const VictoryContainer = styled.div`
   align-items: center;
 `;
 
-export const StyledButton = styled.button`
-  background-color: #333;
-  color: white;
+export const StyledButton = styled.div`
+  border: 1px solid black;
+  border-radius: 3px;
   padding: 10px;
-  border-radius: 10px;
-  border: none;
+  &:hover {
+    background-color: #6bcaff;
+    color: white;
+    border: 1px solid white;
+    cursor: pointer;
+  }
 `;
 
 export default GuessingLogic;

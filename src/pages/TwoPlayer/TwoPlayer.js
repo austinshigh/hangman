@@ -1,32 +1,37 @@
 import React from "react";
 import Navigation from "../../components/Navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 // import styled from "styled-components";
 import FirstPlayer from "./FirstPlayer";
 import SecondPlayer from "./SecondPlayer";
 
 const TwoPlayer = () => {
-  const [playerOneActive, setFirstPlayerActive] = useState(true);
+  const [playerOneActive, setPlayerOneActive] = useState(true);
   const [phrase, setPhrase] = useState();
-  const [isValid, setIsValid] = useState(false);
+  // const [isValid, setIsValid] = useState(false);
   const [showError, setShowError] = useState(false);
 
   const validateInput = (input) => {
     let disallowedValues = /[^a-z\s]/gi.test(input);
     if (!disallowedValues) {
       setShowError(false);
-      setIsValid(true);
       setPhrase(input);
+      setPlayerOneActive(false);
     } else {
       setShowError(true);
     }
   };
 
-  useEffect(() => {
-    if (isValid) {
-      setFirstPlayerActive(false);
-    }
-  }, [isValid]);
+  const handleTriggerNewGame = () => {
+    setPhrase(undefined);
+    setPlayerOneActive(true);
+  };
+
+  // useEffect(() => {
+  //   if (isValid) {
+  //     setFirstPlayerActive(false);
+  //   }
+  // }, [isValid]);
 
   return (
     <>
@@ -35,7 +40,10 @@ const TwoPlayer = () => {
       {playerOneActive === true ? (
         <FirstPlayer handleSubmitPhrase={validateInput} showError={showError} />
       ) : (
-        <SecondPlayer phrase={phrase} />
+        <SecondPlayer
+          phrase={phrase}
+          handleTriggerPlayerOneTurn={handleTriggerNewGame}
+        />
       )}
     </>
   );

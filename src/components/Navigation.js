@@ -37,9 +37,6 @@ const Container = styled.div`
 const StyledLink = styled(Link)`
   color: #333;
   text-decoration: none;
-  &:hover {
-    color: white;
-  }
 `;
 
 const NavButton = styled.div`
@@ -47,10 +44,22 @@ const NavButton = styled.div`
   border-radius: 3px;
   padding: 10px;
   &:hover {
-    background-color: #333;
+    background-color: #6bcaff;
+    color: white;
+    border: 1px solid white;
+    cursor: pointer;
+    ${StyledLink} {
+      color: white;
+    }
   }
-  &:active {
-    background-color: ;
+  ${
+    "" /* &:active {
+    background-color: #6bcaff;
+    color: white;
+    border: 1px solid white;
+    ${StyledLink} {
+      color: white;
+    } */
   }
 `;
 

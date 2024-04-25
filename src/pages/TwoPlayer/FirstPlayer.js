@@ -30,10 +30,22 @@ const Container = styled.div`
 
 const StyledInput = styled.input`
   height: 25px;
+  outline-color: #6bcaff;
 `;
 
-const StyledButton = styled.button`
+const StyledButton = styled.div`
   height: 30px;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 10px;
+  text-align: center;
+  line-height: 30px;
+  &:hover {
+    background-color: #6bcaff;
+    color: white;
+    border: 1px solid white;
+    cursor: pointer;
+  }
 `;
 
 const InputError = styled.div`

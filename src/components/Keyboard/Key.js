@@ -24,11 +24,18 @@ const StyledKey = styled.div`
   border-radius: 5px;
   box-shadow: 1px 1px 1px #333333;
   &:hover {
-    background-color: rgb(0, 132, 255);
+    ${"" /* background-color: rgb(0, 132, 255); */}
+    background-color: #6bcaff;
+    color: white;
+    border: 1px solid white;
+    box-shadow: 1px 1px 1px #6bcaff;
+    cursor: pointer;
   }
-  &:active {
+  ${
+    "" /* &:active {
     background-color: rgb(0, 54, 104);
     color: white;
+  } */
   }
   &.disabled {
     pointer-events: none;

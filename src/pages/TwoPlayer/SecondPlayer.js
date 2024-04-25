@@ -3,11 +3,15 @@ import styled from "styled-components";
 import GuessingLogic from "../../components/GuessingLogic";
 
 const SecondPlayer = (props) => {
-  const { phrase } = props;
+  const { phrase, handleTriggerPlayerOneTurn } = props;
 
   return (
     <SecondPlayerContainer>
-      <GuessingLogic phrase={phrase} author={""} />
+      <GuessingLogic
+        phrase={phrase}
+        author={""}
+        handleTriggerPlayerOneTurn={handleTriggerPlayerOneTurn}
+      />
     </SecondPlayerContainer>
   );
 };
