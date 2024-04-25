@@ -5,9 +5,10 @@ import { useEffect } from "react";
 
 const HiddenWord = (props) => {
   const { quote, correctGuesses, handleTriggerVictory } = props;
+  const [remainingLetters, setRemainingLetters] = useState(null);
 
   const generateHint = (quote, lettersGuessed) => {
-    console.log(lettersGuessed);
+    let letterCount = 0;
     let parsedHint = quote.split("").map((letter) => {
       if (letter === " ") {
         return " ";
@@ -17,24 +18,30 @@ const HiddenWord = (props) => {
       ) {
         return letter;
       } else {
+        letterCount++;
         return "_";
       }
     });
+    setRemainingLetters(letterCount);
     return parsedHint;
   };
 
-  const [hint, setHint] = useState(generateHint(props.quote));
+  const [hint, setHint] = useState(null);
 
   useEffect(() => {
-    // console.log(props.correctGuesses);
-    setHint(generateHint(quote, correctGuesses));
+    if (quote.length > 0) {
+      // generate new hint with quote and array of correct guesses
+      let tempHint = generateHint(quote, correctGuesses);
+      setHint(tempHint);
+    }
   }, [correctGuesses, quote]);
 
   useEffect(() => {
-    if (hint.length > 1 && hint.indexOf("_") === -1) {
+    if (remainingLetters !== null && remainingLetters === 0) {
       handleTriggerVictory();
+      setRemainingLetters(null);
     }
-  }, [hint, handleTriggerVictory]);
+  }, [remainingLetters, handleTriggerVictory]);
 
   return (
     <Container>

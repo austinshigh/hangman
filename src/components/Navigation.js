@@ -2,19 +2,26 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const Navigation = () => {
+const Navigation = (props) => {
   return (
     <>
+      <h1>hangman</h1>
       <Container>
-        <NavButton>
-          <StyledLink to="/">play</StyledLink>
-        </NavButton>
-        <NavButton>
-          <StyledLink to="/settings">settings</StyledLink>
-        </NavButton>
-        <NavButton>
-          <StyledLink to="/stats">statistics</StyledLink>
-        </NavButton>
+        {props.page === "home" && (
+          <>
+            <NavButton>
+              <StyledLink to="/one-player">one-player</StyledLink>
+            </NavButton>
+            <NavButton>
+              <StyledLink to="/two-player">two-player</StyledLink>
+            </NavButton>
+          </>
+        )}
+        {(props.page === "one-player" || props.page === "two-player") && (
+          <NavButton>
+            <StyledLink to="/">home</StyledLink>
+          </NavButton>
+        )}
       </Container>
     </>
   );

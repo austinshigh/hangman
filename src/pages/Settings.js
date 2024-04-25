@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyledInput, StyledButton, InputContainer } from "./Homepage";
+import { StyledInput, StyledButton, InputContainer } from "./OnePlayer";
 import styled from "styled-components";
 
 const Settings = (props) => {

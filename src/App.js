@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import OnePlayer from "./pages/OnePlayer";
+import TwoPlayer from "./pages/TwoPlayer";
 import Homepage from "./pages/Homepage";
 import Settings from "./pages/Settings";
 import Stats from "./pages/Stats";
@@ -13,7 +15,7 @@ function Hangman() {
   const [upperBound, setUpperBound] = useState(100);
   const [guessLimit, setGuessLimit] = useState(5);
 
-  // functions for Homepage
+  // functions for OnePlayer
 
   const incrementTotalWins = () => {
     setTotalWins(totalWins + 1);
@@ -41,10 +43,11 @@ function Hangman() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route index element={<Homepage />} />
           <Route
-            index
+            path="one-player"
             element={
-              <Homepage
+              <OnePlayer
                 guessLimit={guessLimit}
                 lowerBound={lowerBound}
                 upperBound={upperBound}
@@ -53,6 +56,7 @@ function Hangman() {
               />
             }
           />
+          <Route path="two-player" element={<TwoPlayer />} />
           <Route
             path="settings"
             element={

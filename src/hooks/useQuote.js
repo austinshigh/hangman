@@ -17,7 +17,7 @@ const useQuote = (props) => {
             .then((response) => {
               if (response.status === 200) {
                 setQuote(response.data.content.replace(/[^0-9a-z ]/gi, ""));
-                setAuthor(response.author);
+                setAuthor(response.data.author);
                 return;
               }
             })
