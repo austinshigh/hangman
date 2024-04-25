@@ -16,11 +16,11 @@ const Homepage = () => {
 };
 
 const HomeContainer = styled.div`
-  width: 200px;
+  width: 250px;
   position: absolute;
   bottom: 24.5vh;
   img {
-    width: 200px;
+    width: 250px;
   }
 `;
 

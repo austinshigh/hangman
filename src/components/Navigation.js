@@ -44,10 +44,14 @@ export const NavButton = styled.div`
   border-radius: 3px;
   padding: 10px;
   margin: 20px;
+  text-align: center;
+  box-shadow: 1px 1px 1px #333333;
   &:hover {
     background-color: #6bcaff;
     color: white;
     border: 1px solid white;
+    box-shadow: 1px 1px 1px #6bcaff;
+
     cursor: pointer;
     ${StyledLink} {
       color: white;

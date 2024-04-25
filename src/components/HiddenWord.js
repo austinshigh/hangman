@@ -63,7 +63,6 @@ const HiddenWord = (props) => {
     <Container>
       <ImageContainer>
         <StyledImage src={images[remainingGuesses]} />
-        {/* <StyledImageLoss src={six} /> */}
       </ImageContainer>
       <StyledHint>{hint}</StyledHint>
     </Container>
@@ -80,8 +79,8 @@ const StyledHint = styled.div`
 
 const StyledImage = styled.img`
   height: 300px;
-  ${"" /* width: 40px; */}
   display: block;
+  ${"" /* margin-top: -150px; */}
 `;
 
 // const StyledImageLoss = styled.img`

@@ -4,8 +4,6 @@ import { useState } from "react";
 import styled from "styled-components";
 import FirstPlayer from "./FirstPlayer";
 import SecondPlayer from "./SecondPlayer";
-import { NavButton } from "../../components/Navigation";
-import { StyledLink } from "../../components/Navigation";
 
 const TwoPlayer = () => {
   const [playerOneActive, setPlayerOneActive] = useState(true);
@@ -50,9 +48,6 @@ const TwoPlayer = () => {
             handleTriggerPlayerOneTurn={handleTriggerNewGame}
           />
         )}
-        <NavButton>
-          <StyledLink to="/">go home</StyledLink>
-        </NavButton>
       </TwoPlayerContainer>
     </>
   );

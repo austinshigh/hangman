@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
+import { NavButton } from "../../components/Navigation";
+import { StyledLink } from "../../components/Navigation";
+import { Link } from "react-router-dom";
 
 const FirstPlayer = (props) => {
   const { handleSubmitPhrase, showError } = props;
@@ -10,14 +13,17 @@ const FirstPlayer = (props) => {
     <Container>
       <div>enter a phrase for player 2 to guess</div>
       <StyledInput
-        placeholder="Max 40 characters"
+        placeholder="max 40 characters"
         onChange={(e) => setInput(e.target.value)}
         maxLength={40}
       ></StyledInput>
       {showError && <InputError>a-z characters only</InputError>}
       <StyledButton onClick={() => handleSubmitPhrase(input)}>
-        Ready
+        ready
       </StyledButton>
+      <NavButton>
+        <StyledLink to="/">go home</StyledLink>
+      </NavButton>
     </Container>
   );
 };
@@ -26,11 +32,13 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
+  color: #333;
 `;
 
 const StyledInput = styled.input`
   height: 25px;
   outline-color: #6bcaff;
+  text-align: center;
 `;
 
 const StyledButton = styled.div`
@@ -40,8 +48,11 @@ const StyledButton = styled.div`
   padding: 10px;
   text-align: center;
   line-height: 30px;
+  color: #333;
+  box-shadow: 1px 1px 1px #333333;
   &:hover {
     background-color: #6bcaff;
+    box-shadow: 1px 1px 1px #6bcaff;
     color: white;
     border: 1px solid white;
     cursor: pointer;

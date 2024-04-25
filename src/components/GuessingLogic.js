@@ -3,9 +3,13 @@ import styled from "styled-components";
 import Keyboard from "../components/Keyboard/Keyboard";
 import HiddenWord from "../components/HiddenWord";
 import { useState, useEffect } from "react";
+import { NavButton } from "../components/Navigation";
+import { StyledLink } from "../components/Navigation";
+import { Link } from "react-router-dom";
 
 const GuessingLogic = (props) => {
   const {
+    originalPhrase,
     phrase,
     author,
     triggerQuote,
@@ -58,6 +62,7 @@ const GuessingLogic = (props) => {
   useEffect(() => {
     if (remainingGuesses === 0) {
       setLoss(true);
+      document.body.style.overflow = "scroll";
     }
   }, [remainingGuesses]);
 
@@ -92,13 +97,20 @@ const GuessingLogic = (props) => {
           <Win>you win!</Win>
         </VictoryContainer>
       )}
-      {loss && <Lose>you lose.</Lose>}
-      {victory || (loss && <div>that correct answer was {phrase}</div>)}
+      {loss && (
+        <VictoryContainer>
+          <Lose>you lose.</Lose>
+        </VictoryContainer>
+      )}
+      {/* {victory || (loss && <div>{phrase}</div>)} */}
 
       <ButtonContainer>
         <StyledButton onClick={(e) => handleClickNewGame(e)}>
           {victory || loss ? "play again" : "give up"}
         </StyledButton>
+        <NavButton>
+          <StyledLink to="/">go home</StyledLink>
+        </NavButton>
       </ButtonContainer>
     </div>
   );
@@ -146,8 +158,11 @@ export const StyledButton = styled.div`
   border-radius: 3px;
   padding: 10px;
   margin: 20px;
+  color: #333;
+  box-shadow: 1px 1px 1px #333333;
   &:hover {
     background-color: #6bcaff;
+    box-shadow: 1px 1px 1px #6bcaff;
     color: white;
     border: 1px solid white;
     cursor: pointer;

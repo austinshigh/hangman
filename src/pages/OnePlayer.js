@@ -2,15 +2,12 @@ import React from "react";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import useQuote from "../hooks/useQuote";
-import { Link } from "react-router-dom";
 import GuessingLogic from "../components/GuessingLogic";
-import { NavButton } from "../components/Navigation";
-import { StyledLink } from "../components/Navigation";
 
 const OnePlayer = (props) => {
   const [regenerate, setRegenerate] = useState(true);
 
-  const { quote, author } = useQuote({
+  const { quote, author, original } = useQuote({
     regenerate: regenerate,
   });
 
@@ -26,6 +23,11 @@ const OnePlayer = (props) => {
 
   useEffect(() => {
     setRegenerate(false);
+    window.scrollTo({
+      top: 200,
+      behavior: "smooth",
+    });
+    document.body.style.overflow = "hidden";
   }, [quote]);
 
   return (
@@ -34,6 +36,7 @@ const OnePlayer = (props) => {
       <OnePlayerContainer>
         {/* <div>can you guess the famous quote?</div> */}
         <GuessingLogic
+          originalPhrase={original}
           phrase={quote}
           author={author}
           triggerQuote={() => setRegenerate(true)}
@@ -42,9 +45,6 @@ const OnePlayer = (props) => {
           handleResetRemainingGuesses={handleResetRemainingGuesses}
         />
       </OnePlayerContainer>
-      <NavButton>
-        <StyledLink to="/">go home</StyledLink>
-      </NavButton>
     </>
   );
 };
@@ -55,6 +55,7 @@ const OnePlayerContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 30px;
+  margin-bottom: calc(100vh + 150px);
 `;
 
 export default OnePlayer;

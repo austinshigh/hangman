@@ -28,6 +28,7 @@ const SecondPlayer = (props) => {
           remainingGuesses={remainingGuesses}
           handleDecrementRemainingGuesses={handleDecrementRemainingGuesses}
           handleResetRemainingGuesses={handleResetRemainingGuesses}
+          originalPhrase={phrase}
         />
       </SecondPlayerContainer>
     </>
