@@ -34,6 +34,12 @@ const StyledKey = styled.div`
     pointer-events: none;
     background-color: #333;
   }
+  @media (max-width: 375px) {
+    height: 35px;
+    width: 23px;
+    font-size: 20px;
+    line-height: 35px;
+  }
 `;
 
 export default Key;

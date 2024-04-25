@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import OnePlayer from "./pages/OnePlayer";
-import TwoPlayer from "./pages/TwoPlayer";
+import TwoPlayer from "./pages/TwoPlayer/TwoPlayer";
 import Homepage from "./pages/Homepage";
 import Settings from "./pages/Settings";
 import Stats from "./pages/Stats";

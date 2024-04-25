@@ -29,7 +29,7 @@ const HiddenWord = (props) => {
   const [hint, setHint] = useState(null);
 
   useEffect(() => {
-    if (quote.length > 0) {
+    if (quote !== undefined && quote.length > 0) {
       // generate new hint with quote and array of correct guesses
       let tempHint = generateHint(quote, correctGuesses);
       setHint(tempHint);

@@ -5,12 +5,11 @@ const useQuote = (props) => {
   const [quote, setQuote] = useState("");
   const [author, setAuthor] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const { regenerate, setRegenerate } = props;
+  const { regenerate } = props;
 
   useEffect(() => {
     const getQuoteData = async () => {
       if (regenerate) {
-        setRegenerate(false);
         try {
           await axios
             .get("https://api.quotable.io/random?maxLength=40&minLength=0")
@@ -32,7 +31,7 @@ const useQuote = (props) => {
       }
     };
     getQuoteData();
-  }, [regenerate, setRegenerate]);
+  }, [regenerate]);
   return {
     quote,
     author,

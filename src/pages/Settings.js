@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { StyledInput, StyledButton, InputContainer } from "./OnePlayer";
 import styled from "styled-components";
 
 const Settings = (props) => {
@@ -53,6 +52,33 @@ const SettingsContainer = styled.div`
   div {
     padding: 0px 20px;
   }
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  ${
+    "" /* @media (max-width: 600px) {
+    flex-direction: column;
+  } */
+  }
+`;
+
+const StyledInput = styled.input`
+  border-radius: 10px;
+  height: 30px;
+  width: 50px;
+  text-align: center;
+`;
+
+const StyledButton = styled.button`
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
 `;
 
 export default Settings;

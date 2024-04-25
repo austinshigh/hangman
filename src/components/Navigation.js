@@ -5,7 +5,6 @@ import styled from "styled-components";
 const Navigation = (props) => {
   return (
     <>
-      <h1>hangman</h1>
       <Container>
         {props.page === "home" && (
           <>
