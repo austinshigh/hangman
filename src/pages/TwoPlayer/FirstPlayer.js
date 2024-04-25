@@ -21,7 +21,7 @@ const FirstPlayer = (props) => {
         ready
       </StyledButton>
       <NavButton>
-        <StyledLink to="/">go home</StyledLink>
+        <StyledLinkWide to="/">go home</StyledLinkWide>
       </NavButton>
     </Container>
   );
@@ -62,6 +62,11 @@ const StyledButton = styled.div`
 const InputError = styled.div`
   color: red;
   text-align: center;
+`;
+
+const StyledLinkWide = styled(StyledLink)`
+  padding: 0em 5em;
+  margin: 0em -5em;
 `;
 
 export default FirstPlayer;
