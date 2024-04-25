@@ -3,17 +3,21 @@ import styled from "styled-components";
 import Keyboard from "../components/Keyboard/Keyboard";
 import HiddenWord from "../components/HiddenWord";
 import { useState, useEffect } from "react";
+import { NavButton } from "../components/Navigation";
+import { StyledLink } from "../components/Navigation";
 
 const GuessingLogic = (props) => {
   const {
+    originalPhrase,
     phrase,
     author,
     triggerQuote,
-    guessLimit,
     handleTriggerPlayerOneTurn,
+    remainingGuesses,
+    handleDecrementRemainingGuesses,
+    handleResetRemainingGuesses,
   } = props;
 
-  const [remainingGuesses, setRemainingGuesses] = useState(guessLimit || 5);
   const [incorrectGuesses, setIncorrectGuesses] = useState([]);
   const [correctGuesses, setCorrectGuesses] = useState([]);
   const [victory, setVictory] = useState(false);
@@ -40,7 +44,7 @@ const GuessingLogic = (props) => {
 
   const handleInvalidGuess = (letter) => {
     setIncorrectGuesses((prevState) => [...prevState, letter]);
-    setRemainingGuesses((prevState) => prevState - 1);
+    handleDecrementRemainingGuesses();
   };
 
   const handleCorrectGuess = (letter) => {
@@ -56,13 +60,14 @@ const GuessingLogic = (props) => {
   useEffect(() => {
     if (remainingGuesses === 0) {
       setLoss(true);
+      document.body.style.overflow = "scroll";
     }
   }, [remainingGuesses]);
 
   const handleClickNewGame = () => {
     setLoss(false);
     setVictory(false);
-    setRemainingGuesses(guessLimit || 5);
+    handleResetRemainingGuesses();
     setIncorrectGuesses([]);
     setCorrectGuesses([]);
     triggerQuote !== undefined && triggerQuote();
@@ -75,6 +80,7 @@ const GuessingLogic = (props) => {
           quote={phrase}
           correctGuesses={correctGuesses}
           handleTriggerVictory={handleTriggerVictory}
+          remainingGuesses={remainingGuesses}
         />
       </HiddenWordContainer>
       {!loss && !victory && (
@@ -89,19 +95,20 @@ const GuessingLogic = (props) => {
           <Win>you win!</Win>
         </VictoryContainer>
       )}
-      {loss && <Lose>you lose.</Lose>}
-      {victory || (loss && <div>that correct answer was {phrase}</div>)}
-      {!victory && !loss && (
-        <>
-          <RemainingGuesses>
-            you have {remainingGuesses} remaining guesses
-          </RemainingGuesses>
-        </>
+      {loss && (
+        <VictoryContainer>
+          <Lose>you lose.</Lose>
+        </VictoryContainer>
       )}
+      {victory || (loss && <div>{originalPhrase}</div>)}
+
       <ButtonContainer>
         <StyledButton onClick={(e) => handleClickNewGame(e)}>
           {victory || loss ? "play again" : "give up"}
         </StyledButton>
+        <NavButton>
+          <StyledLink to="/">go home</StyledLink>
+        </NavButton>
       </ButtonContainer>
     </div>
   );
@@ -120,12 +127,6 @@ const Win = styled.div`
 const Lose = styled.div`
   color: #ff6b6b;
   font-size: 25px;
-`;
-
-const RemainingGuesses = styled.div`
-  color: #333;
-  margin: 20px 0px;
-  text-align: center;
 `;
 
 const ButtonContainer = styled.div`
@@ -148,8 +149,12 @@ export const StyledButton = styled.div`
   border: 1px solid black;
   border-radius: 3px;
   padding: 10px;
+  margin: 20px;
+  color: #333;
+  box-shadow: 1px 1px 1px #333333;
   &:hover {
     background-color: #6bcaff;
+    box-shadow: 1px 1px 1px #6bcaff;
     color: white;
     border: 1px solid white;
     cursor: pointer;

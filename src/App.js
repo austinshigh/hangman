@@ -13,7 +13,7 @@ function Hangman() {
 
   const [lowerBound, setLowerBound] = useState(0);
   const [upperBound, setUpperBound] = useState(100);
-  const [guessLimit, setGuessLimit] = useState(5);
+  const [guessLimit, setGuessLimit] = useState(6);
 
   // functions for OnePlayer
 
