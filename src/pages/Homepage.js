@@ -16,20 +16,18 @@ const Homepage = () => {
 };
 
 const HomeContainer = styled.div`
+  width: 200px;
   position: absolute;
-  height: 100vw;
-  bottom: 0;
+  bottom: 25vh;
   img {
-    width: 50vw;
-    position: absolute;
-    bottom: 25vh;
+    width: 200px;
   }
 `;
 
 const Water = styled.div`
   bottom: 0;
   position: absolute;
-  height: 50vw;
+  height: 28vh;
   background-color: #55c2ff;
   width: 100vw;
 `;

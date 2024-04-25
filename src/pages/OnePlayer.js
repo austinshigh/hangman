@@ -14,6 +14,16 @@ const OnePlayer = (props) => {
     regenerate: regenerate,
   });
 
+  const [remainingGuesses, setRemainingGuesses] = useState(6);
+
+  const handleDecrementRemainingGuesses = () => {
+    setRemainingGuesses((prevState) => prevState - 1);
+  };
+
+  const handleResetRemainingGuesses = () => {
+    setRemainingGuesses(6);
+  };
+
   useEffect(() => {
     setRegenerate(false);
   }, [quote]);
@@ -27,6 +37,9 @@ const OnePlayer = (props) => {
           phrase={quote}
           author={author}
           triggerQuote={() => setRegenerate(true)}
+          remainingGuesses={remainingGuesses}
+          handleDecrementRemainingGuesses={handleDecrementRemainingGuesses}
+          handleResetRemainingGuesses={handleResetRemainingGuesses}
         />
       </OnePlayerContainer>
       <NavButton>

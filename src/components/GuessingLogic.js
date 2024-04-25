@@ -11,9 +11,11 @@ const GuessingLogic = (props) => {
     triggerQuote,
     guessLimit,
     handleTriggerPlayerOneTurn,
+    remainingGuesses,
+    handleDecrementRemainingGuesses,
+    handleResetRemainingGuesses,
   } = props;
 
-  const [remainingGuesses, setRemainingGuesses] = useState(guessLimit || 5);
   const [incorrectGuesses, setIncorrectGuesses] = useState([]);
   const [correctGuesses, setCorrectGuesses] = useState([]);
   const [victory, setVictory] = useState(false);
@@ -40,7 +42,7 @@ const GuessingLogic = (props) => {
 
   const handleInvalidGuess = (letter) => {
     setIncorrectGuesses((prevState) => [...prevState, letter]);
-    setRemainingGuesses((prevState) => prevState - 1);
+    handleDecrementRemainingGuesses();
   };
 
   const handleCorrectGuess = (letter) => {
@@ -62,7 +64,7 @@ const GuessingLogic = (props) => {
   const handleClickNewGame = () => {
     setLoss(false);
     setVictory(false);
-    setRemainingGuesses(guessLimit || 5);
+    handleResetRemainingGuesses();
     setIncorrectGuesses([]);
     setCorrectGuesses([]);
     triggerQuote !== undefined && triggerQuote();
@@ -75,6 +77,7 @@ const GuessingLogic = (props) => {
           quote={phrase}
           correctGuesses={correctGuesses}
           handleTriggerVictory={handleTriggerVictory}
+          remainingGuesses={remainingGuesses}
         />
       </HiddenWordContainer>
       {!loss && !victory && (

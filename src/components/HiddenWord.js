@@ -10,8 +10,18 @@ import five from "../images/five.svg";
 import six from "../images/six.svg";
 
 const HiddenWord = (props) => {
-  const { quote, correctGuesses, handleTriggerVictory } = props;
+  const { quote, correctGuesses, handleTriggerVictory, remainingGuesses } =
+    props;
   const [remainingLetters, setRemainingLetters] = useState(null);
+
+  const images = {
+    0: six,
+    1: five,
+    2: four,
+    3: three,
+    4: two,
+    5: one,
+  };
 
   const generateHint = (quote, lettersGuessed) => {
     let letterCount = 0;
@@ -52,7 +62,7 @@ const HiddenWord = (props) => {
   return (
     <Container>
       <ImageContainer>
-        <StyledImage src={four} />
+        <StyledImage src={images[remainingGuesses]} />
         {/* <StyledImageLoss src={six} /> */}
       </ImageContainer>
       <StyledHint>{hint}</StyledHint>
@@ -69,8 +79,8 @@ const StyledHint = styled.div`
 `;
 
 const StyledImage = styled.img`
-  height: 20px;
-  width: 20px;
+  height: 300px;
+  ${"" /* width: 40px; */}
   display: block;
 `;
 
