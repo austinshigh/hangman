@@ -101,9 +101,9 @@ const GuessingLogic = (props) => {
         </VictoryContainer>
       )}
       <ButtonContainer>
-        <StyledButton onClick={(e) => handleClickNewGame(e)}>
+        <HiddenButton onClick={(e) => handleClickNewGame(e)}>
           {victory || loss ? "play again" : "give up"}
-        </StyledButton>
+        </HiddenButton>
         <NavButton>
           <StyledLink to="/">go home</StyledLink>
         </NavButton>
@@ -143,6 +143,10 @@ const VictoryContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const HiddenButton = styled.div`
+  display: none;
 `;
 
 export const StyledButton = styled.div`
