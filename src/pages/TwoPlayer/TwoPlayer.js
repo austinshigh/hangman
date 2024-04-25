@@ -1,5 +1,4 @@
 import React from "react";
-import Navigation from "../../components/Navigation";
 import { useState } from "react";
 import styled from "styled-components";
 import FirstPlayer from "./FirstPlayer";
@@ -36,7 +35,6 @@ const TwoPlayer = () => {
   return (
     <>
       <TwoPlayerContainer>
-        <Navigation page="two-player" />
         {playerOneActive === true ? (
           <FirstPlayer
             handleSubmitPhrase={validateInput}
@@ -58,9 +56,6 @@ const TwoPlayerContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 80vh;
-  top: 0;
-  position: absolute;
 `;
 
 export default TwoPlayer;

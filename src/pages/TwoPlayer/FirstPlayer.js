@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useState } from "react";
 import { NavButton } from "../../components/Navigation";
 import { StyledLink } from "../../components/Navigation";
-import { Link } from "react-router-dom";
 
 const FirstPlayer = (props) => {
   const { handleSubmitPhrase, showError } = props;
@@ -33,6 +32,7 @@ const Container = styled.div`
   flex-direction: column;
   gap: 15px;
   color: #333;
+  margin-top: 20vh;
 `;
 
 const StyledInput = styled.input`

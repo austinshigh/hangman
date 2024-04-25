@@ -5,7 +5,6 @@ import HiddenWord from "../components/HiddenWord";
 import { useState, useEffect } from "react";
 import { NavButton } from "../components/Navigation";
 import { StyledLink } from "../components/Navigation";
-import { Link } from "react-router-dom";
 
 const GuessingLogic = (props) => {
   const {
@@ -13,7 +12,6 @@ const GuessingLogic = (props) => {
     phrase,
     author,
     triggerQuote,
-    guessLimit,
     handleTriggerPlayerOneTurn,
     remainingGuesses,
     handleDecrementRemainingGuesses,
@@ -102,7 +100,7 @@ const GuessingLogic = (props) => {
           <Lose>you lose.</Lose>
         </VictoryContainer>
       )}
-      {/* {victory || (loss && <div>{phrase}</div>)} */}
+      {victory || (loss && <div>{originalPhrase}</div>)}
 
       <ButtonContainer>
         <StyledButton onClick={(e) => handleClickNewGame(e)}>
@@ -129,12 +127,6 @@ const Win = styled.div`
 const Lose = styled.div`
   color: #ff6b6b;
   font-size: 25px;
-`;
-
-const RemainingGuesses = styled.div`
-  color: #333;
-  margin: 20px 0px;
-  text-align: center;
 `;
 
 const ButtonContainer = styled.div`

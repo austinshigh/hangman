@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import GuessingLogic from "../../components/GuessingLogic";
-import { useState } from "react";
-import { NavButton } from "../../components/Navigation";
-import { StyledLink } from "../../components/Navigation";
+import { useState, useEffect } from "react";
 
 const SecondPlayer = (props) => {
   const { phrase, handleTriggerPlayerOneTurn } = props;
@@ -17,6 +15,14 @@ const SecondPlayer = (props) => {
   const handleResetRemainingGuesses = () => {
     setRemainingGuesses(6);
   };
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 200,
+      behavior: "smooth",
+    });
+    document.body.style.overflow = "hidden";
+  }, [phrase]);
 
   return (
     <>
@@ -35,6 +41,8 @@ const SecondPlayer = (props) => {
   );
 };
 
-const SecondPlayerContainer = styled.div``;
+const SecondPlayerContainer = styled.div`
+  margin-bottom: calc(100vh + 150px);
+`;
 
 export default SecondPlayer;

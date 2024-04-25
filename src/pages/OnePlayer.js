@@ -7,7 +7,7 @@ import GuessingLogic from "../components/GuessingLogic";
 const OnePlayer = (props) => {
   const [regenerate, setRegenerate] = useState(true);
 
-  const { quote, author, original } = useQuote({
+  const { quote, author, original, handleRef } = useQuote({
     regenerate: regenerate,
   });
 
@@ -19,6 +19,11 @@ const OnePlayer = (props) => {
 
   const handleResetRemainingGuesses = () => {
     setRemainingGuesses(6);
+  };
+
+  const triggerNewQuote = () => {
+    setRegenerate(true);
+    handleRef();
   };
 
   useEffect(() => {
@@ -39,7 +44,7 @@ const OnePlayer = (props) => {
           originalPhrase={original}
           phrase={quote}
           author={author}
-          triggerQuote={() => setRegenerate(true)}
+          triggerQuote={() => triggerNewQuote()}
           remainingGuesses={remainingGuesses}
           handleDecrementRemainingGuesses={handleDecrementRemainingGuesses}
           handleResetRemainingGuesses={handleResetRemainingGuesses}
