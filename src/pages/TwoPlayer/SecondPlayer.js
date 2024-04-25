@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import GuessingLogic from "../../components/GuessingLogic";
 import { useState } from "react";
+import { NavButton } from "../../components/Navigation";
+import { StyledLink } from "../../components/Navigation";
 
 const SecondPlayer = (props) => {
   const { phrase, handleTriggerPlayerOneTurn } = props;
@@ -17,16 +19,18 @@ const SecondPlayer = (props) => {
   };
 
   return (
-    <SecondPlayerContainer>
-      <GuessingLogic
-        phrase={phrase}
-        author={""}
-        handleTriggerPlayerOneTurn={handleTriggerPlayerOneTurn}
-        remainingGuesses={remainingGuesses}
-        handleDecrementRemainingGuesses={handleDecrementRemainingGuesses}
-        handleResetRemainingGuesses={handleResetRemainingGuesses}
-      />
-    </SecondPlayerContainer>
+    <>
+      <SecondPlayerContainer>
+        <GuessingLogic
+          phrase={phrase}
+          author={""}
+          handleTriggerPlayerOneTurn={handleTriggerPlayerOneTurn}
+          remainingGuesses={remainingGuesses}
+          handleDecrementRemainingGuesses={handleDecrementRemainingGuesses}
+          handleResetRemainingGuesses={handleResetRemainingGuesses}
+        />
+      </SecondPlayerContainer>
+    </>
   );
 };
 

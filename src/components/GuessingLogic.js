@@ -94,13 +94,7 @@ const GuessingLogic = (props) => {
       )}
       {loss && <Lose>you lose.</Lose>}
       {victory || (loss && <div>that correct answer was {phrase}</div>)}
-      {!victory && !loss && (
-        <>
-          <RemainingGuesses>
-            you have {remainingGuesses} remaining guesses
-          </RemainingGuesses>
-        </>
-      )}
+
       <ButtonContainer>
         <StyledButton onClick={(e) => handleClickNewGame(e)}>
           {victory || loss ? "play again" : "give up"}
@@ -151,6 +145,7 @@ export const StyledButton = styled.div`
   border: 1px solid black;
   border-radius: 3px;
   padding: 10px;
+  margin: 20px;
   &:hover {
     background-color: #6bcaff;
     color: white;

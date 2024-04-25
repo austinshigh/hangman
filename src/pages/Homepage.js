@@ -18,7 +18,7 @@ const Homepage = () => {
 const HomeContainer = styled.div`
   width: 200px;
   position: absolute;
-  bottom: 25vh;
+  bottom: 24.5vh;
   img {
     width: 200px;
   }

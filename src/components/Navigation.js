@@ -43,6 +43,7 @@ export const NavButton = styled.div`
   border: 1px solid black;
   border-radius: 3px;
   padding: 10px;
+  margin: 20px;
   &:hover {
     background-color: #6bcaff;
     color: white;
