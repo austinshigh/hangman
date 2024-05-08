@@ -7,7 +7,7 @@ const Homepage = () => {
   return (
     <>
       <Navigation page="home" />
-      <Water></Water>
+      <Water />
       <HomeContainer>
         <img alt="home" src={YourHome} />
       </HomeContainer>

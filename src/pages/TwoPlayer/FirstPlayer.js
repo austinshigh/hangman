@@ -6,6 +6,8 @@ import { StyledLink } from "../../components/Navigation";
 
 const FirstPlayer = (props) => {
   const { handleSubmitPhrase, showError } = props;
+
+  // User Input
   const [input, setInput] = useState();
 
   return (

@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import { useEffect } from "react";
-import one from "../images/one.svg";
 import two from "../images/two.svg";
 import three from "../images/three.svg";
 import four from "../images/four.svg";
@@ -19,17 +18,21 @@ const HiddenWord = (props) => {
   } = props;
   const [remainingLetters, setRemainingLetters] = useState(null);
 
+  // display hangman images based on remaining number of guesses
   const images = {
     0: six,
     1: five,
     2: four,
     3: three,
     4: two,
-    5: one,
   };
 
+  // Returns a hint string containing all of the correct guesses so far,
+  // '_' characters are in place of letters that have not yet been guessed
   const generateHint = (quote, lettersGuessed) => {
-    let letterCount = 0;
+    let unguessedLetterCount = 0;
+
+    // Builds hint string
     let parsedHint = quote.split("").map((letter) => {
       if (letter === " ") {
         return " ";
@@ -39,24 +42,26 @@ const HiddenWord = (props) => {
       ) {
         return letter;
       } else {
-        letterCount++;
+        unguessedLetterCount++;
         return "_";
       }
     });
-    setRemainingLetters(letterCount);
+    setRemainingLetters(unguessedLetterCount);
     return parsedHint;
   };
 
   const [hint, setHint] = useState(null);
 
+  // Generate a new hint
+  // Triggered whhen a new correct letter is guessed, a new quote is generated, or a loss is triggered
   useEffect(() => {
     if (quote !== undefined && quote.length > 0) {
-      // generate new hint with quote and array of correct guesses
       let tempHint = generateHint(quote, correctGuesses);
       setHint(tempHint);
     }
   }, [correctGuesses, quote, loss]);
 
+  // Triggers a win, when there are no remaining unguessed letters,
   useEffect(() => {
     if (remainingLetters !== null && remainingLetters === 0) {
       handleTriggerVictory();
@@ -80,19 +85,17 @@ const StyledHint = styled.div`
   letter-spacing: 10px;
   font-size: 30px;
   text-align: center;
+  min-height: 106.5px;
+  @media (min-width: 1000px) {
+    min-height: 35.5px;
+  }
 `;
 
 const StyledImage = styled.img`
   height: 300px;
   display: block;
-  ${"" /* margin-top: -150px; */}
 `;
 
-// const StyledImageLoss = styled.img`
-//   height: 200px;
-//   width: 200px;
-//   display: block;
-// `;
 const ImageContainer = styled.div`
   width: 100%;
   display: flex;

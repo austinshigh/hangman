@@ -16,11 +16,6 @@ const Navigation = (props) => {
             </NavButton>
           </>
         )}
-        {/* {(props.page === "one-player" || props.page === "two-player") && (
-          <NavButton>
-            <StyledLink to="/">go home</StyledLink>
-          </NavButton>
-        )} */}
       </Container>
     </>
   );

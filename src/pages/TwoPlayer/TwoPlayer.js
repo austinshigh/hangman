@@ -6,15 +6,20 @@ import SecondPlayer from "./SecondPlayer";
 
 const TwoPlayer = () => {
   const [playerOneActive, setPlayerOneActive] = useState(true);
-  const [phrase, setPhrase] = useState();
-  // const [isValid, setIsValid] = useState(false);
+
+  // Correct Answer
+  const [correctAnswer, setCorrectAnswer] = useState();
+
+  // True when validation fails
   const [showError, setShowError] = useState(false);
 
   const validateInput = (input) => {
+    // Allow only a-z and spaces
     let disallowedValues = /[^a-z\s]/gi.test(input);
     if (!disallowedValues) {
+      // if contains other values, error
       setShowError(false);
-      setPhrase(input);
+      setCorrectAnswer(input);
       setPlayerOneActive(false);
     } else {
       setShowError(true);
@@ -22,15 +27,10 @@ const TwoPlayer = () => {
   };
 
   const handleTriggerNewGame = () => {
-    setPhrase(undefined);
+    // reset state to default values for new game
+    setCorrectAnswer(undefined);
     setPlayerOneActive(true);
   };
-
-  // useEffect(() => {
-  //   if (isValid) {
-  //     setFirstPlayerActive(false);
-  //   }
-  // }, [isValid]);
 
   return (
     <>
@@ -42,7 +42,7 @@ const TwoPlayer = () => {
           />
         ) : (
           <SecondPlayer
-            phrase={phrase}
+            phrase={correctAnswer}
             handleTriggerPlayerOneTurn={handleTriggerNewGame}
           />
         )}

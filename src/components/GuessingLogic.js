@@ -17,59 +17,73 @@ const GuessingLogic = (props) => {
     handleResetRemainingGuesses,
   } = props;
 
-  const [incorrectGuesses, setIncorrectGuesses] = useState([]);
+  // Array of letters guessed correctly
   const [correctGuesses, setCorrectGuesses] = useState([]);
-  const [victory, setVictory] = useState(false);
+
+  // Win Status
+  const [win, setWin] = useState(false);
+
+  // Loss Status
   const [loss, setLoss] = useState(false);
 
+  // Array of every letter in the answer phrase
   const [phraseArr, setPhraseArr] = useState([]);
 
+  // Trigger letter key action via innerText of key div
   const handleClickKey = (e) => {
     handleLetterChosen(e.target.innerText.toLowerCase());
   };
 
+  // Check if answer includes, or does not include letter
   const handleLetterChosen = (letter) => {
     let validGuess = phraseArr.includes(letter);
     if (!validGuess) {
-      handleInvalidGuess(letter);
+      // decrement remaining guesses
+      handleDecrementRemainingGuesses();
     } else {
+      // trigger correct guess
       handleCorrectGuess(letter);
     }
   };
 
+  // Trigger a win
   const handleTriggerVictory = () => {
-    setVictory(true);
-  };
-
-  const handleInvalidGuess = (letter) => {
-    setIncorrectGuesses((prevState) => [...prevState, letter]);
-    handleDecrementRemainingGuesses();
+    setWin(true);
   };
 
   const handleCorrectGuess = (letter) => {
+    // Update correct guesses array
     setCorrectGuesses((prevState) => [...prevState, letter]);
   };
 
   useEffect(() => {
     if (phrase !== undefined) {
+      // if phrase is passed as prop, split into array for comparison and display
       setPhraseArr(phrase.toLowerCase().split(""));
     }
   }, [phrase]);
 
   useEffect(() => {
+    // WHen guesses run out, set loss state and allow user to scroll
     if (remainingGuesses === 0) {
       setLoss(true);
       document.body.style.overflow = "scroll";
     }
   }, [remainingGuesses]);
 
+  // Reset State for new game and trigger new GET request for quote
   const handleClickNewGame = () => {
     setLoss(false);
-    setVictory(false);
+    setWin(false);
     handleResetRemainingGuesses();
-    setIncorrectGuesses([]);
     setCorrectGuesses([]);
+
+    // Trigger quote for 1 player mode
+    // if 2 Player mode, API is not used, trigger quote will be undefined
     triggerQuote !== undefined && triggerQuote();
+
+    // Set to Player 1 turn for 2 player mode
+    // If 1 player mode, handleTriggerPlayerOneTurn will be undefined
     handleTriggerPlayerOneTurn !== undefined && handleTriggerPlayerOneTurn();
   };
   return (
@@ -83,14 +97,9 @@ const GuessingLogic = (props) => {
           loss={loss}
         />
       </HiddenWordContainer>
-      {!loss && !victory && (
-        <Keyboard
-          handleClickKey={handleClickKey}
-          disabledLetters={[...incorrectGuesses, ...correctGuesses]}
-        />
-      )}
-      {victory || (loss && <AuthorName>{author || null}</AuthorName>)}
-      {victory && (
+      {!loss && !win && <Keyboard handleClickKey={handleClickKey} />}
+      {(win || loss) && <AuthorName>{author || null}</AuthorName>}
+      {win && (
         <VictoryContainer>
           <Win>you win!</Win>
         </VictoryContainer>
@@ -102,7 +111,7 @@ const GuessingLogic = (props) => {
       )}
       <ButtonContainer>
         <HiddenButton onClick={(e) => handleClickNewGame(e)}>
-          {victory || loss ? "play again" : "give up"}
+          {win || loss ? "play again" : "give up"}
         </HiddenButton>
         <NavButton>
           <StyledLink to="/">go home</StyledLink>
