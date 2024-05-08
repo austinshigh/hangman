@@ -8,7 +8,22 @@ const FirstPlayer = (props) => {
   const { handleSubmitPhrase, showError } = props;
 
   // User Input
-  const [input, setInput] = useState();
+  const [input, setInput] = useState("");
+
+  // Used to display messages exlusive to two player mode
+  const [errorMessage, setErrorMessage] = useState(undefined);
+
+  // Validate and submit phrase
+  const handleReadyClick = () => {
+    if (input.length === 0) {
+      setErrorMessage("min 1 character");
+    } else if (input.length > 40) {
+      setErrorMessage("max 40 characters");
+    } else {
+      setErrorMessage(undefined);
+      handleSubmitPhrase(input);
+    }
+  };
 
   return (
     <Container>
@@ -16,12 +31,10 @@ const FirstPlayer = (props) => {
       <StyledInput
         placeholder="max 40 characters"
         onChange={(e) => setInput(e.target.value)}
-        maxLength={40}
       ></StyledInput>
       {showError && <InputError>a-z characters only</InputError>}
-      <StyledButton onClick={() => handleSubmitPhrase(input)}>
-        ready
-      </StyledButton>
+      {errorMessage && <InputError>{errorMessage}</InputError>}
+      <StyledButton onClick={() => handleReadyClick()}>ready</StyledButton>
       <NavButton>
         <StyledLinkWide to="/">go home</StyledLinkWide>
       </NavButton>
