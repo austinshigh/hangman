@@ -15,14 +15,18 @@ const useQuote = (props) => {
 
   useEffect(() => {
     const getQuoteData = async () => {
+      const limit = Math.round(Math.random() * 50);
+      const place = limit - 1;
       try {
         await axios
-          .get("https://api.quotable.io/random?maxLength=40&minLength=0")
+          .get(`https://dummyjson.com/quotes?limit=${limit}`)
           .then((response) => {
             if (response.status === 200) {
-              setOriginal(response.data.content);
-              setQuote(response.data.content.replace(/[^a-z ]/gi, ""));
-              setAuthor(response.data.author);
+              setOriginal(response.data.quotes[place].quote);
+              setQuote(
+                response.data.quotes[place].quote.replace(/[^a-z ]/gi, "")
+              );
+              setAuthor(response.data.quotes[place].author);
               return;
             }
           })
